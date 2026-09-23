@@ -9,8 +9,31 @@ description = "Shared Snowflake connection utilities"
 requires-python = ">=3.11"
 dependencies = [
     "snowflake-connector-python[secure-local-storage,pandas]",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp==1.26.0"]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "mypy>=1.10",
 ]
 
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["snowflake_connection*"]
+where = [".", "gui"]
+include = ["snowflake_connection*", "arc_explorer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["gui/tests"]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint.per-file-ignores]
+# FastMCP tool signatures require Field(default_factory=...) as the parameter
+# default so the tool schema carries the type; this is the framework idiom.
+"gui/arc_explorer/mcp_server.py" = ["B008"]
+
+[tool.mypy]
+ignore_missing_imports = true

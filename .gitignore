@@ -39,3 +39,10 @@ Thumbs.db
 
 # Logs
 *.log
+# Local runtime state, never shared: cached ARCDW schema, saved query
+# snapshots (real warehouse rows), the MCP session token and local paths.
+gui/data/
+
+# Scratch and build output
+temp/
+dist/
